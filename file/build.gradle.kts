@@ -13,7 +13,7 @@ kotlin {
     sourceSets {
         val main by getting {
             dependencies {
-                api(projects.loggingCore)
+                api(projects.lexiApi)
                 api(kotlinx.datetime)
             }
         }
@@ -21,6 +21,6 @@ kotlin {
 }
 
 aSoftOSSLibrary(
-    version = asoft.versions.foundation.get(),
+    version = asoft.versions.root.get(),
     description = "A jvm solution to logging on to a file"
 )

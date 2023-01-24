@@ -22,7 +22,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.loggingCore)
+                api(projects.lexiApi)
             }
         }
 
@@ -34,7 +34,7 @@ kotlin {
 
         val androidTest by getting {
             dependencies {
-                implementation(project(":logging-test-android"))
+                implementation(projects.lexiTestAndroid)
             }
         }
 
@@ -65,6 +65,6 @@ kotlin {
 }
 
 aSoftOSSLibrary(
-    version = asoft.versions.foundation.get(),
+    version = asoft.versions.root.get(),
     description = "A multiplatform solution to logging on the console"
 )

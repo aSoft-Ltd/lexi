@@ -20,6 +20,6 @@ kotlin {
 }
 
 aSoftOSSLibrary(
-    version = asoft.versions.foundation.get(),
+    version = asoft.versions.root.get(),
     description = "Log on android tests without worrying about the android sdk"
 )
