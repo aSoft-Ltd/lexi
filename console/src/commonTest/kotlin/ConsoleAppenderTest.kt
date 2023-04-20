@@ -1,6 +1,6 @@
-import logging.ConsoleAppender
-import logging.LogLevel
-import logging.console
+import lexi.ConsoleAppender
+import lexi.LogLevel
+import lexi.console
 import kotlin.test.Test
 
 class ConsoleAppenderTest {

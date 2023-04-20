@@ -1,4 +1,3 @@
-package logging
+package lexi
 
-@Deprecated("use lexi instead")
 expect class ConsoleAppender(options: ConsoleAppenderOptions) : Appender

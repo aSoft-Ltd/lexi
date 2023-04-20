@@ -1,9 +1,8 @@
-package logging
+package lexi
 
 import kotlin.js.Console
 import kotlin.js.console as consl
 
-@Deprecated("use lexi instead")
 actual class ConsoleAppender actual constructor(
     var options: ConsoleAppenderOptions
 ) : Appender, Console {

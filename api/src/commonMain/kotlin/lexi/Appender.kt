@@ -1,6 +1,5 @@
-package logging
+package lexi
 
-@Deprecated("use lexi instead")
 interface Appender {
     fun append(level: LogLevel, msg: String, vararg data: Pair<String, Any?>)
     fun append(vararg o: Any?)

@@ -1,8 +1,7 @@
-package logging
+package lexi
 
 import android.util.Log
 
-@Deprecated("use lexi instead")
 actual class ConsoleAppender actual constructor(var options: ConsoleAppenderOptions) : Appender {
     override fun append(level: LogLevel, msg: String, vararg data: Pair<String, Any?>) {
         if (level >= options.level) {

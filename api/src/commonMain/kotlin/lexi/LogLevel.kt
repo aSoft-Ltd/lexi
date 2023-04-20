@@ -1,6 +1,5 @@
-package logging
+package lexi
 
-@Deprecated("use lexi instead")
 enum class LogLevel {
     DEBUG, INFO, WARNING, ERROR, FAILURE
 }

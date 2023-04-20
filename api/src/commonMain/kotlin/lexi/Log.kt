@@ -1,6 +1,5 @@
-package logging
+package lexi
 
-@Deprecated("use lexi instead")
 data class Log(
     val level: LogLevel,
     val message: String,

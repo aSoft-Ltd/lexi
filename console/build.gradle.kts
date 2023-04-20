@@ -14,10 +14,16 @@ android {
 }
 
 kotlin {
-    android { library() }
-    jvm { library() }
-    js(IR) { library() }
-    val nativeTargets = nativeTargets(true)
+    if (Targeting.ANDROID) android { library() }
+    if (Targeting.JVM) jvm { library() }
+    if (Targeting.JS) js(IR) { library() }
+    if (Targeting.WASM) wasm { library() }
+    val osxTargets = if (Targeting.OSX) osxTargets() else listOf()
+    val ndkTargets = if (Targeting.NDK) ndkTargets() else listOf()
+    val linuxTargets = if (Targeting.LINUX) linuxTargets() else listOf()
+    val mingwTargets = if (Targeting.MINGW) mingwTargets() else listOf()
+
+    val nativeTargets = osxTargets + ndkTargets + linuxTargets + mingwTargets
 
     sourceSets {
         val commonMain by getting {
@@ -28,36 +34,48 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                implementation(projects.expectCore)
+                implementation(projects.kommanderCore)
             }
         }
 
-        val androidTest by getting {
-            dependencies {
-                implementation(projects.lexiTestAndroid)
+        if (Targeting.ANDROID) {
+            val androidTest by getting {
+                dependencies {
+                    implementation(projects.lexiTestAndroid)
+                }
             }
         }
 
-        val nativeMain by creating {
+        val otherMain by creating {
             dependsOn(commonMain)
         }
 
-        val nativeTest by creating {
-            dependsOn(nativeMain)
-            dependsOn(commonTest)
+//        val otherTest by creating {
+//            dependsOn(otherMain)
+//            dependsOn(commonTest)
+//        }
+
+        if (Targeting.WASM) {
+            val wasmMain by getting {
+                dependsOn(otherMain)
+            }
+
+//            val wasmTest by getting {
+//                dependsOn(otherTest)
+//            }
         }
 
         for (target in nativeTargets) {
             val main by target.compilations.getting {
                 defaultSourceSet {
-                    dependsOn(nativeMain)
+                    dependsOn(otherMain)
                 }
             }
 
             val test by target.compilations.getting {
                 defaultSourceSet {
 //                    dependsOn(main.defaultSourceSet)
-                    dependsOn(commonTest)
+//                    dependsOn(otherTest)
                 }
             }
         }
