@@ -1,14 +1,12 @@
 plugins {
     kotlin("jvm")
     id("tz.co.asoft.library")
-    id("io.codearte.nexus-staging")
-    signing
 }
 
+description = "Log on android tests without worrying about the android sdk"
+
 kotlin {
-    target {
-        library()
-    }
+    target { library() }
 
     sourceSets {
         val test by getting {
@@ -18,8 +16,3 @@ kotlin {
         }
     }
 }
-
-aSoftOSSLibrary(
-    version = asoft.versions.root.get(),
-    description = "Log on android tests without worrying about the android sdk"
-)

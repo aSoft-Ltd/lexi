@@ -1,14 +1,12 @@
 plugins {
     kotlin("jvm")
     id("tz.co.asoft.library")
-    id("io.codearte.nexus-staging")
-    signing
 }
 
+description = "A kotlin multiplatform solution to logging on files"
+
 kotlin {
-    target {
-        targetJava("1.8")
-    }
+    target { targetJava("1.8") }
 
     sourceSets {
         val main by getting {
@@ -19,8 +17,3 @@ kotlin {
         }
     }
 }
-
-aSoftOSSLibrary(
-    version = asoft.versions.root.get(),
-    description = "A jvm solution to logging on to a file"
-)

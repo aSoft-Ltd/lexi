@@ -2,9 +2,9 @@ plugins {
     id("com.android.library")
     kotlin("multiplatform")
     id("tz.co.asoft.library")
-    id("io.codearte.nexus-staging")
-    signing
 }
+
+description = "A kotlin multiplatform solution to logging on the console"
 
 android {
     configureAndroid("src/androidMain")
@@ -81,8 +81,3 @@ kotlin {
         }
     }
 }
-
-aSoftOSSLibrary(
-    version = asoft.versions.root.get(),
-    description = "A multiplatform solution to logging on the console"
-)
