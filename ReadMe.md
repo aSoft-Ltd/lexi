@@ -2,7 +2,7 @@
 
 A Multiplatform logging library
 
-![Maven](https://img.shields.io/maven-central/v/tz.co.asoft/lexi/2.0.13?style=for-the-badge)
+![Maven](https://img.shields.io/maven-central/v/tz.co.asoft/lexi/unspecified?style=for-the-badge)
 ![Kotlin](https://img.shields.io/badge/kotlin-multiplatform-blue?style=for-the-badge&logo=kotlin&logoColor=white)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=&logoColor=white)
@@ -16,16 +16,16 @@ A Multiplatform logging library
 ```kotlin
 dependencies {
     // if you need it in common code
-    implementation("tz.co.asoft:lexi-api:2.0.13")
+    implementation("tz.co.asoft:lexi-api:unspecified")
 
     // if you want to write logs to the console
-    implementation("tz.co.asoft:lexi-console:2.0.13")
+    implementation("tz.co.asoft:lexi-console:unspecified")
     
     // if you want to write logs to your file
-    implementation("tz.co.asoft:lexi-file:2.0.13")
+    implementation("tz.co.asoft:lexi-file:unspecified")
     
     // if you want to test writing logs on android
-    implementation("tz.co.asoft:lexi-test-android:2.0.13")
+    implementation("tz.co.asoft:lexi-test-android:unspecified")
 }
 ```
 
