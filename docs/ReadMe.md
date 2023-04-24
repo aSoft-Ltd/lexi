@@ -23,7 +23,7 @@ dependencies {
 ```
 
 ## Api Reference
-The full api reference of kevlar can be found at [https://asoft-ltd.github.io/kevlar](https://asoft-ltd.github.io/kevlar)
+The full api reference of kevlar can be found at [https://asoft-ltd.github.io/krest](https://asoft-ltd.github.io/krest)
 
 ## Support
 

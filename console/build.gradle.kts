@@ -1,3 +1,5 @@
+import java.lang.System
+
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
@@ -6,8 +8,7 @@ plugins {
 
 description = "A kotlin multiplatform solution to logging on the console"
 
-android {
-    configureAndroid("src/androidMain")
+configureAndroid("src/androidMain") {
     defaultConfig {
         minSdk = 8
     }
