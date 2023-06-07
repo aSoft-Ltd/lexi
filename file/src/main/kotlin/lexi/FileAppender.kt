@@ -1,4 +1,4 @@
-package logging
+package lexi
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
