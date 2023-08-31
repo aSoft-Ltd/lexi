@@ -68,9 +68,9 @@ subprojects {
 tasks.dokkaHtmlMultiModule {
     moduleName.set("Lexi")
     outputDirectory.set(rootDir.resolve("docs"))
-	moduleVersion.set(asoft.versions.root.get())
+	moduleVersion.set(libs.versions.asoft.get())
     includes.from("ReadMe.md")
 }
 
 group = "tz.co.asoft"
-version = asoft.versions.root.get()
+version = libs.versions.asoft.get()
