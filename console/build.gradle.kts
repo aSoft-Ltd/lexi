@@ -29,7 +29,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.lexiApi)
+                api(libs.lexi.api)
             }
         }
 
@@ -42,7 +42,7 @@ kotlin {
 //        if (Targeting.ANDROID) {
 //            val androidTest by getting {
 //                dependencies {
-//                    implementation(projects.lexiTestAndroid)
+//                    implementation(libs.lexi.test.android)
 //                }
 //            }
 //        }

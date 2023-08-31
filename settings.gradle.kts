@@ -1,26 +1,9 @@
 pluginManagement {
-    enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-    repositories {
-        google()
-        gradlePluginPortal()
-        mavenCentral()
-    }
-
-    dependencyResolutionManagement {
-        versionCatalogs {
-            file("../versions/gradle/versions").listFiles().map {
-                it.nameWithoutExtension to it.absolutePath
-            }.forEach { (name, path) ->
-                create(name) { from(files(path)) }
-            }
-        }
-    }
+    includeBuild("../build-logic")
 }
 
-fun includeRoot(name: String, path: String) {
-    include(":$name")
-    project(":$name").projectDir = File(path)
+plugins {
+    id("multimodule")
 }
 
 fun includeSubs(base: String, path: String = base, vararg subs: String) {
@@ -30,12 +13,11 @@ fun includeSubs(base: String, path: String = base, vararg subs: String) {
     }
 }
 
+includeBuild("../kommander")
+
 rootProject.name = "lexi"
 
 includeBuild("../able")
-
-// dependencies
-includeSubs("kommander", "../kommander", "core", "coroutines")
 
 includeSubs("lexi", ".", "api", "console", "file")
 includeSubs("lexi-test", "test", "android")

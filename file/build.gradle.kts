@@ -11,7 +11,7 @@ kotlin {
     sourceSets {
         val main by getting {
             dependencies {
-                api(projects.lexiApi)
+                api(libs.lexi.api)
                 api(kotlinx.datetime)
             }
         }
