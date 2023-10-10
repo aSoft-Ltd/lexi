@@ -16,9 +16,11 @@ interface Appender {
 
     fun error(msg: String, c: Throwable?, vararg data: Pair<String, Any?>) = append(level = LogLevel.ERROR, msg = msg, data = *data)
 
+    fun error(msg: String, c: Throwable?) = error(msg = msg, c, "reason" to (c?.message ?: "unknown"))
+
     fun error(msg: String, vararg data: Pair<String, Any?>) = append(level = LogLevel.ERROR, msg = msg, data = *data)
 
-    fun error(c: Throwable?) = error(c?.message ?: "Unknown Error", c)
+    fun error(c: Throwable?) = error(c?.message ?: "Unknown Error", c, "reason" to (c?.message ?: "unknown"))
 
     fun failure(msg: String, c: Throwable?, vararg data: Pair<String, Any?>) = append(level = LogLevel.FAILURE, msg = msg, data = *data)
 
