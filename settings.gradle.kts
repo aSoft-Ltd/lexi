@@ -17,7 +17,5 @@ includeBuild("../kommander")
 
 rootProject.name = "lexi"
 
-includeBuild("../able")
-
-includeSubs("lexi", ".", "api", "console", "file")
+includeSubs("lexi", ".", "api", "console", "file", "config")
 includeSubs("lexi-test", "test", "android")

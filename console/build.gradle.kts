@@ -29,7 +29,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(libs.lexi.api)
+                api(projects.lexiApi)
             }
         }
 

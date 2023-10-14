@@ -4,7 +4,7 @@ plugins {
     id("tz.co.asoft.library")
 }
 
-description = "A kotlin multiplatform solution to logging onto files"
+description = "A kotlin multiplatform solution to logging on the console"
 
 kotlin {
     if (Targeting.JVM) jvm { library() }
@@ -15,19 +15,21 @@ kotlin {
     val linuxTargets = if (Targeting.LINUX) linuxTargets() else listOf()
     val mingwTargets = if (Targeting.MINGW) mingwTargets() else listOf()
 
+    val nativeTargets = osxTargets + ndkTargets + linuxTargets + mingwTargets
+
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.lexiApi)
-                api(squareup.okio.core)
-                api(kotlinx.datetime)
+                api(projects.lexiConsole)
+                api(projects.lexiFile)
+                api(kotlinx.serialization.toml)
             }
         }
 
         val commonTest by getting {
             dependencies {
-                api(libs.kommander.coroutines)
-                api(squareup.okio.fake)
+                implementation(libs.kommander.core)
+                implementation(squareup.okio.fake)
             }
         }
     }
