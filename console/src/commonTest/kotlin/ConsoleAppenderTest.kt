@@ -1,18 +1,12 @@
+import kotlin.test.Test
 import lexi.ConsoleAppender
 import lexi.LogLevel
-import lexi.console
-import kotlin.test.Test
 
 class ConsoleAppenderTest {
-    @Test
-    fun api_should_look_good() {
-        console.info("Testing again", "first" to 1, "second" to 2)
-        console.error("This is a test error", "correct" to false)
-    }
 
     @Test
     fun should_print_less_verbose_errors() {
-        val logger = ConsoleAppender(verbose = false)
+        val logger = ConsoleAppender()
         logger.debug("Debug test")
         logger.info("Info test")
         logger.warn("Warning test")

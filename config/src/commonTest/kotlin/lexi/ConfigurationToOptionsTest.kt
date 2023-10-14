@@ -50,7 +50,6 @@ class ConfigurationToOptionsTest {
             prefix = "/app/test".toPath()
         )?.firstOrNull() as FileAppenderOptions
         expect(options.level).toBe(LogLevel.INFO)
-        expect(options.verbose).toBe(true)
         expect(options.directory).toBe("/logs".toPath())
     }
 }

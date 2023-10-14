@@ -6,6 +6,7 @@ import kotlin.js.console as consl
 actual class ConsoleAppender actual constructor(
     var options: ConsoleAppenderOptions
 ) : Appender, Console {
+
     override fun append(level: LogLevel, msg: String, vararg data: Pair<String, Any?>) {
         if (level >= options.level) {
             val printer: (Array<out Any?>) -> Unit = when (level) {
@@ -16,13 +17,12 @@ actual class ConsoleAppender actual constructor(
                 LogLevel.FAILURE -> { ar -> consl.error(*ar) }
             }
 
-            if (options.verbose) {
-                val args = mutableListOf<Any?>("${level.name}: $msg") + data.map {
-                    "\n${it.first}: ${it.second}"
-                }
-                printer(args.toTypedArray())
+            val log = Log(level, msg, null, data.toMap())
+            val formatted = options.formatter.format(log)
+            if (options.formatter is JsonLogFormatter) {
+                printer(arrayOf(JSON.parse<dynamic>(formatted)))
             } else {
-                printer(arrayOf("${level.name}: $msg"))
+                printer(arrayOf(formatted))
             }
         }
     }

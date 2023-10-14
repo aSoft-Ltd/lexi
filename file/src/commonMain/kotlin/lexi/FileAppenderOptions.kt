@@ -8,6 +8,6 @@ class FileAppenderOptions(
     val system: FileSystem,
     val directory: Path,
     val level: LogLevel = LogLevel.DEBUG,
-    val verbose: Boolean = true,
+    val formatter: LogFormatter,
     val clock: Clock
 )

@@ -13,4 +13,12 @@ kotlin {
     val ndkTargets = if (Targeting.NDK) ndkTargets() else listOf()
     val linuxTargets = if (Targeting.LINUX) linuxTargets() else listOf()
     val mingwTargets = if (Targeting.MINGW) mingwTargets() else listOf()
+
+    sourceSets {
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.kommander.core)
+            }
+        }
+    }
 }

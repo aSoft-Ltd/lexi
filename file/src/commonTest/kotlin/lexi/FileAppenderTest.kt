@@ -21,7 +21,8 @@ class FileAppenderTest {
         val options = FileAppenderOptions(
             system = system,
             directory = directory,
-            clock = FrozenClock
+            clock = FrozenClock,
+            formatter = SimpleLogFormatter()
         )
         FileAppender(options)
     }
@@ -33,13 +34,13 @@ class FileAppenderTest {
         val file = system.flattenedFiles(directory).first()
         val text = system.read(file) { readUtf8() }
         expect(file).toBe(directory / "1970" / "01" / "01" / "00.log")
-        expect(text).toBe(
-            """
-                ---->
-                INFO: test
-                
-            """.trimIndent()
-        )
+        expect(text).toBe("""
+            = = = = = = = = = = = = = S T A R T = = = = = = = = = = = = =
+            [INFO]: test
+            Source: Unknown
+            = = = = = = = = = = = = = = E N D = = = = = = = = = = = = = =
+            
+        """.trimIndent())
     }
 
     fun FileSystem.flattenedFiles(path: Path): List<Path> {

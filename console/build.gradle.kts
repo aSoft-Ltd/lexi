@@ -39,13 +39,13 @@ kotlin {
             }
         }
 
-//        if (Targeting.ANDROID) {
-//            val androidTest by getting {
-//                dependencies {
-//                    implementation(libs.lexi.test.android)
-//                }
-//            }
-//        }
+        if (Targeting.ANDROID) {
+            val androidUnitTest by getting {
+                dependencies {
+                    implementation(projects.lexiTestAndroid)
+                }
+            }
+        }
 
         val otherMain by creating {
             dependsOn(commonMain)

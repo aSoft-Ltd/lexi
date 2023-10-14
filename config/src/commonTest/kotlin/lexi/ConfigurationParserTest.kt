@@ -4,10 +4,15 @@ import kommander.expect
 import kommander.expectFunction
 import kotlin.test.Test
 import kotlinx.serialization.Serializable
+import lexi.appender.ConsoleAppenderConfiguration
+import lexi.appender.FileAppenderConfiguration
 import net.peanuuutz.tomlkt.Toml
 
 class ConfigurationParserTest {
 
+    private val codec = Toml { 
+        ignoreUnknownKeys = true
+    }
     @Serializable
     data class TestConfiguration(
         val logging: LoggingConfiguration? = null
@@ -15,7 +20,7 @@ class ConfigurationParserTest {
 
     @Test
     fun should_be_able_to_parse_an_empty_configuration() {
-        val config = Toml.decodeFromString(TestConfiguration.serializer(), "")
+        val config = codec.decodeFromString(TestConfiguration.serializer(), "")
         expect(config.logging).toBe(null)
     }
 
@@ -24,7 +29,7 @@ class ConfigurationParserTest {
         val raw = """
             [logging]
         """.trimIndent()
-        val config = Toml.decodeFromString(TestConfiguration.serializer(), raw)
+        val config = codec.decodeFromString(TestConfiguration.serializer(), raw)
         expect(config.logging?.level).toBe(null)
         expect(config.logging?.appenders).toBeEmpty()
     }
@@ -36,28 +41,16 @@ class ConfigurationParserTest {
             
             [[logging.appenders]]
             type = "console"
-            verbose = false
             level = "debug"
+            formatter.verbose = false
+            formatter.type = "json"
         """.trimIndent()
-        val config = Toml.decodeFromString(TestConfiguration.serializer(), raw)
+        val config = codec.decodeFromString(TestConfiguration.serializer(), raw)
         expect(config.logging?.level).toBe(null)
         expect(config.logging?.appenders).toContainElements()
         val appender = config.logging?.appenders?.firstOrNull() as? ConsoleAppenderConfiguration ?: throw RuntimeException("appenders should container elements but did not")
-        expect(appender.level).toBe(LevelConfiguration.debug)
-        expect(appender.verbose).toBe(false)
-    }
-
-    @Test
-    fun should_fail_to_parse_unknown_logging_levels() {
-        val raw = """
-            [logging]
-            
-            [[logging.appenders]]
-            type = "console"
-            verbose = false
-            level = "DEBUG"
-        """.trimIndent()
-        expectFunction { Toml.decodeFromString(TestConfiguration.serializer(), raw) }.toFail()
+        expect(LogLevel.parse(appender.level)).toBe(LogLevel.DEBUG)
+        expect(appender.formatter?.verbose).toBe(false)
     }
 
     @Test
@@ -69,11 +62,11 @@ class ConfigurationParserTest {
             [logging]
             
             [[logging.appenders]]
-            type = "console"
+            type = "consolidation"
             verbose = false
             level = "DEBUG"
         """.trimIndent()
-        expectFunction { Toml.decodeFromString(TestConfiguration.serializer(), raw) }.toFail()
+        expectFunction { codec.decodeFromString(TestConfiguration.serializer(), raw) }.toFail()
     }
 
     @Test
@@ -84,16 +77,17 @@ class ConfigurationParserTest {
             [[logging.appenders]]
             type = "file"
             directory = "/logs"
-            verbose = false
             level = "debug"
+            formatter.type = "json"
+            formatter.verbose = false
         """.trimIndent()
 
-        val config = Toml.decodeFromString(TestConfiguration.serializer(), raw)
+        val config = codec.decodeFromString(TestConfiguration.serializer(), raw)
         expect(config.logging?.level).toBe(null)
         expect(config.logging?.appenders).toContainElements()
         val appender = config.logging?.appenders?.firstOrNull() as? FileAppenderConfiguration ?: throw RuntimeException("appenders should container elements but did not")
-        expect(appender.level).toBe(LevelConfiguration.debug)
-        expect(appender.verbose).toBe(false)
+        expect(LogLevel.parse(appender.level)).toBe(LogLevel.DEBUG)
+        expect(appender.formatter?.verbose).toBe(false)
         expect(appender.directory).toBe("/logs")
     }
 
@@ -104,28 +98,30 @@ class ConfigurationParserTest {
             
             [[logging.appenders]]
             type = "console"
-            verbose = false
             level = "debug"
+            formatter.type = "json"
+            formatter.verbose = false
             
             [[logging.appenders]]
             type = "file"
-            directory = "/logs"
-            verbose = false
             level = "debug"
+            directory = "/logs"
+            formatter.type = "simple"
+            formatter.verbose = false
         """.trimIndent()
 
-        val logging = Toml.decodeFromString(TestConfiguration.serializer(), raw).logging
+        val logging = codec.decodeFromString(TestConfiguration.serializer(), raw).logging
         val appenders = logging?.appenders ?: throw RuntimeException("appenders should container elements but did not")
 
         expect(logging.level).toBe(null)
         expect(appenders).toContainElements()
         val appender1 = appenders[0] as ConsoleAppenderConfiguration
-        expect(appender1.level).toBe(LevelConfiguration.debug)
-        expect(appender1.verbose).toBe(false)
+        expect(LogLevel.parse(appender1.level)).toBe(LogLevel.DEBUG)
+        expect(appender1.formatter?.verbose).toBe(false)
 
         val appender2 = appenders[1] as FileAppenderConfiguration
-        expect(appender2.level).toBe(LevelConfiguration.debug)
-        expect(appender2.verbose).toBe(false)
+        expect(LogLevel.parse(appender2.level)).toBe(LogLevel.DEBUG)
+        expect(appender2.formatter?.verbose).toBe(false)
         expect(appender2.directory).toBe("/logs")
     }
 }
