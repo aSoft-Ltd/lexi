@@ -29,7 +29,7 @@ class LoggingConfiguration(
         when (it) {
             is ConsoleAppenderConfiguration -> ConsoleAppenderOptions(
                 level = l,
-                formatter = when (val formatter = it.formatter) {
+                formatter = when (val formatter = it.format) {
                     is SimpleLogFormatterConfiguration -> formatter.toFormatter(verbose, source, status)
                     is JsonFormatterConfiguration -> formatter.toFormatter(verbose,source,status)
                     null -> SimpleLogFormatter()
@@ -41,7 +41,7 @@ class LoggingConfiguration(
                 directory = prefix / it.directory,
                 clock = clock,
                 level = l,
-                formatter = when (val formatter = it.formatter) {
+                formatter = when (val formatter = it.format) {
                     is SimpleLogFormatterConfiguration -> formatter.toFormatter(verbose, source, status)
                     is JsonFormatterConfiguration -> formatter.toFormatter(verbose,source,status)
                     null -> SimpleLogFormatter(SimpleLogFormatterOptions())

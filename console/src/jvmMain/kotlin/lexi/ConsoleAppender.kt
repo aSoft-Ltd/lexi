@@ -4,16 +4,8 @@ actual class ConsoleAppender actual constructor(var options: ConsoleAppenderOpti
     override fun append(level: LogLevel, msg: String, vararg data: Pair<String, Any?>) {
         if (level >= options.level) {
             val stream = if (level >= LogLevel.ERROR) System.err else System.out
-            if (options.verbose) {
-                stream.println("\n" + "= ".repeat(31))
-                stream.println("${level.name}: $msg")
-                data.forEach {
-                    stream.println("${it.first}: ${it.second}")
-                }
-                stream.println("= ".repeat(31))
-            } else {
-                stream.println("${level.name}: $msg")
-            }
+            val log = Log(level, msg, null, data.toMap())
+            stream.println(options.formatter.format(log))
         }
     }
 

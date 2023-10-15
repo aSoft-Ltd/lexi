@@ -8,7 +8,7 @@ fun LoggingConfigurationJson.toConsoleAppenders() = appenders.mapNotNull {
     if (it.type != CONSOLE_APPENDER_TYPE) return@mapNotNull null
     ConsoleAppender(
         level = LogLevel.parse(it.level ?: level) ?: LogLevel.DEBUG,
-        formatter = it.formatter.toFormatter(verbose, source, status)
+        formatter = it.format.toFormatter(verbose, source, status)
     )
 }
 

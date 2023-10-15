@@ -10,5 +10,5 @@ import lexi.file.constants.FILE_APPENDER_TYPE
 class FileAppenderConfiguration(
     val directory: String,
     override val level: String? = null,
-    override val formatter: FormatterConfiguration? = null
+    override val format: FormatterConfiguration? = null
 ) : AppenderConfiguration()

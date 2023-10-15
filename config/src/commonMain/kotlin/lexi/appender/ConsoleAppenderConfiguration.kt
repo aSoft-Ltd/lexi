@@ -9,5 +9,5 @@ import lexi.console.constants.CONSOLE_APPENDER_TYPE
 @SerialName(CONSOLE_APPENDER_TYPE)
 data class ConsoleAppenderConfiguration(
     override val level: String? = null,
-    override val formatter: FormatterConfiguration? = null
+    override val format: FormatterConfiguration? = null
 ) : AppenderConfiguration()

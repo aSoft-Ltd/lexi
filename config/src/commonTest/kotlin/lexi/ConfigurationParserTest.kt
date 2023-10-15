@@ -50,7 +50,7 @@ class ConfigurationParserTest {
         expect(config.logging?.appenders).toContainElements()
         val appender = config.logging?.appenders?.firstOrNull() as? ConsoleAppenderConfiguration ?: throw RuntimeException("appenders should container elements but did not")
         expect(LogLevel.parse(appender.level)).toBe(LogLevel.DEBUG)
-        expect(appender.formatter?.verbose).toBe(false)
+        expect(appender.format?.verbose).toBe(false)
     }
 
     @Test
@@ -87,7 +87,7 @@ class ConfigurationParserTest {
         expect(config.logging?.appenders).toContainElements()
         val appender = config.logging?.appenders?.firstOrNull() as? FileAppenderConfiguration ?: throw RuntimeException("appenders should container elements but did not")
         expect(LogLevel.parse(appender.level)).toBe(LogLevel.DEBUG)
-        expect(appender.formatter?.verbose).toBe(false)
+        expect(appender.format?.verbose).toBe(false)
         expect(appender.directory).toBe("/logs")
     }
 
@@ -117,11 +117,11 @@ class ConfigurationParserTest {
         expect(appenders).toContainElements()
         val appender1 = appenders[0] as ConsoleAppenderConfiguration
         expect(LogLevel.parse(appender1.level)).toBe(LogLevel.DEBUG)
-        expect(appender1.formatter?.verbose).toBe(false)
+        expect(appender1.format?.verbose).toBe(false)
 
         val appender2 = appenders[1] as FileAppenderConfiguration
         expect(LogLevel.parse(appender2.level)).toBe(LogLevel.DEBUG)
-        expect(appender2.formatter?.verbose).toBe(false)
+        expect(appender2.format?.verbose).toBe(false)
         expect(appender2.directory).toBe("/logs")
     }
 }

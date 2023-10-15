@@ -6,5 +6,5 @@ import lexi.formatter.FormatterConfiguration
 @Serializable
 sealed class AppenderConfiguration {
     abstract val level: String?
-    abstract val formatter: FormatterConfiguration?
+    abstract val format: FormatterConfiguration?
 }
