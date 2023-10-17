@@ -15,6 +15,12 @@ kotlin {
     val mingwTargets = if (Targeting.MINGW) mingwTargets() else listOf()
 
     sourceSets {
+        val commonMain by getting {
+            dependencies {
+
+            }
+        }
+
         val commonTest by getting {
             dependencies {
                 implementation(libs.kommander.core)
