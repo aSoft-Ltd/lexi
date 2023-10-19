@@ -9,6 +9,7 @@ plugins {
 description = "A kotlin multiplatform solution to logging on the console"
 
 configureAndroid("src/androidMain") {
+    namespace = "tz.co.asoft.lexi.console"
     defaultConfig {
         minSdk = 8
     }

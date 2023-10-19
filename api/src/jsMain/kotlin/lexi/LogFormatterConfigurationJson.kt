@@ -2,8 +2,8 @@
 package lexi
 
 external interface LogFormatterConfigurationJson {
-    val type: String
-    val source: Boolean?
-    val status: Boolean?
-    val verbose: Boolean?
+    var type: String
+    var source: Boolean?
+    var status: Boolean?
+    var verbose: Boolean?
 }

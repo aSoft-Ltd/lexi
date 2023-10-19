@@ -2,7 +2,7 @@
 package lexi
 
 external interface AppenderConfigurationJson {
-    val type: String
-    val level: String?
-    val format: LogFormatterConfigurationJson?
+    var type: String
+    var level: String?
+    var format: LogFormatterConfigurationJson?
 }

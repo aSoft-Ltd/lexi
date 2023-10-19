@@ -20,7 +20,11 @@ actual class ConsoleAppender actual constructor(
             val log = Log(level, msg, null, data.toMap())
             val formatted = options.formatter.format(log)
             if (options.formatter is JsonLogFormatter) {
-                printer(arrayOf(JSON.parse<dynamic>(formatted)))
+                try {
+                    printer(arrayOf(JSON.parse<dynamic>(formatted)))
+                } catch (_: Throwable) {
+                    printer(arrayOf(formatted))
+                }
             } else {
                 printer(arrayOf(formatted))
             }

@@ -2,9 +2,9 @@
 package lexi
 
 external interface LoggingConfigurationJson {
-    val level: String?
-    val verbose: Boolean?
-    val source: Boolean?
-    val status: Boolean?
-    val appenders: Array<AppenderConfigurationJson>
+    var level: String?
+    var verbose: Boolean?
+    var source: Boolean?
+    var status: Boolean?
+    var appenders: Array<AppenderConfigurationJson>
 }
