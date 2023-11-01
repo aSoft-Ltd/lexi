@@ -31,7 +31,7 @@ class LoggingConfiguration(
                 level = l,
                 formatter = when (val formatter = it.format) {
                     is SimpleLogFormatterConfiguration -> formatter.toFormatter(verbose, source, status)
-                    is JsonFormatterConfiguration -> formatter.toFormatter(verbose,source,status)
+                    is JsonFormatterConfiguration -> formatter.toFormatter(verbose, source, status)
                     null -> SimpleLogFormatter()
                 }
             )
@@ -43,7 +43,7 @@ class LoggingConfiguration(
                 level = l,
                 formatter = when (val formatter = it.format) {
                     is SimpleLogFormatterConfiguration -> formatter.toFormatter(verbose, source, status)
-                    is JsonFormatterConfiguration -> formatter.toFormatter(verbose,source,status)
+                    is JsonFormatterConfiguration -> formatter.toFormatter(verbose, source, status)
                     null -> SimpleLogFormatter(SimpleLogFormatterOptions())
                 }
             )
@@ -62,7 +62,7 @@ class LoggingConfiguration(
                 else -> throw IllegalArgumentException("Unknown AppenderConfiguration ${it::class.simpleName}")
             }
         }
-        return Logger(*a.toTypedArray())
+        return Logger("Unknown", a)
     }
 }
 

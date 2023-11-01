@@ -9,13 +9,15 @@ class LogFormatterTest {
         level = LogLevel.DEBUG,
         message = "Testing json log formatter",
         status = LogStatus.Progressing,
-        source = "Unset",
+        source = "Nameless",
         metadata = mapOf()
     )
 
+    val options = JsonLogFormatterOptions(source = true)
+
     @Test
     fun should_be_able_to_format_logs_in_a_json_way() {
-        val formatter = JsonLogFormatter()
+        val formatter = JsonLogFormatter(options)
 
         expect(formatter.format(log)).toBe("""
             {  
@@ -28,7 +30,7 @@ class LogFormatterTest {
 
     @Test
     fun should_be_able_to_format_logs_in_an_easy_way() {
-        val formatter = SimpleLogFormatter()
+        val formatter = SimpleLogFormatter(SimpleLogFormatterOptions(source = true))
 
         expect(formatter.format(log)).toBe("""
             = = = = = = = = = = = = = S T A R T = = = = = = = = = = = = =

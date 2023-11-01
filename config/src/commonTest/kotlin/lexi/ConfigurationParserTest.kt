@@ -42,8 +42,8 @@ class ConfigurationParserTest {
             [[logging.appenders]]
             type = "console"
             level = "debug"
-            formatter.verbose = false
-            formatter.type = "json"
+            format.verbose = false
+            format.type = "json"
         """.trimIndent()
         val config = codec.decodeFromString(TestConfiguration.serializer(), raw)
         expect(config.logging?.level).toBe(null)
@@ -78,8 +78,8 @@ class ConfigurationParserTest {
             type = "file"
             directory = "/logs"
             level = "debug"
-            formatter.type = "json"
-            formatter.verbose = false
+            format.type = "json"
+            format.verbose = false
         """.trimIndent()
 
         val config = codec.decodeFromString(TestConfiguration.serializer(), raw)
@@ -99,15 +99,15 @@ class ConfigurationParserTest {
             [[logging.appenders]]
             type = "console"
             level = "debug"
-            formatter.type = "json"
-            formatter.verbose = false
+            format.type = "json"
+            format.verbose = false
             
             [[logging.appenders]]
             type = "file"
             level = "debug"
             directory = "/logs"
-            formatter.type = "simple"
-            formatter.verbose = false
+            format.type = "simple"
+            format.verbose = false
         """.trimIndent()
 
         val logging = codec.decodeFromString(TestConfiguration.serializer(), raw).logging
