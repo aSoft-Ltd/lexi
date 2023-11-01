@@ -54,15 +54,15 @@ class LoggingConfiguration(
         system: FileSystem,
         clock: Clock,
         prefix: Path
-    ): Logger {
-        val a = toOptions(system, clock, prefix).map {
+    ): LoggerFactory {
+        val appenders = toOptions(system, clock, prefix).map {
             when (it) {
                 is ConsoleAppenderOptions -> ConsoleAppender(it)
                 is FileAppenderOptions -> FileAppender(it)
                 else -> throw IllegalArgumentException("Unknown AppenderConfiguration ${it::class.simpleName}")
             }
         }
-        return Logger("Unknown", a)
+        return LoggerFactory("Default Factory").apply { addAll(appenders) }
     }
 }
 

@@ -12,6 +12,8 @@ class LogTracer(val message: String, private val appender: Appender) {
         appender.append(log)
     }
 
+    fun debug(message: String) = appender.debug(message)
+
     fun passed() {
         val log = Log(
             level = LogLevel.INFO,
@@ -23,13 +25,13 @@ class LogTracer(val message: String, private val appender: Appender) {
         appender.append(log)
     }
 
-    fun failed() {
+    fun failed(exp: Throwable?) {
         val log = Log(
             level = LogLevel.ERROR,
             message = this.message,
             status = LogStatus.Failed,
             source = "Unset",
-            metadata = mapOf()
+            metadata = mapOf("cause" to exp?.message)
         )
         appender.append(log)
     }
