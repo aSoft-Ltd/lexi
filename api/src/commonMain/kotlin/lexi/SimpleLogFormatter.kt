@@ -10,7 +10,7 @@ class SimpleLogFormatter(private val options: SimpleLogFormatterOptions = Simple
             appendLine("Status: ${log.status.name}")
         }
         if (options.source) {
-            appendLine("Source: ${log.source ?: "Unknown"}")
+            appendLine("Source: ${log.source}")
         }
         if (options.verbose) log.metadata.entries.forEach { (key, value) ->
             if (key != "source") appendLine("""$key: $value""")

@@ -1,26 +1,22 @@
 package lexi
 
-import android.util.Log
+import lexi.internal.AbstractAppender
+import android.util.Log as ALog
 
-actual class ConsoleAppender actual constructor(var options: ConsoleAppenderOptions) : Appender {
-    override fun append(level: LogLevel, msg: String, vararg data: Pair<String, Any?>) {
+actual class ConsoleAppender actual constructor(var options: ConsoleAppenderOptions) : AbstractAppender(), Appender {
+
+    override fun append(log: Log) {
+        val level = log.level
         if (level >= options.level) {
             val printer: (String, String) -> Unit = when (level) {
-                LogLevel.DEBUG -> { tag, txt -> Log.d(tag, txt) }
-                LogLevel.INFO -> { tag, txt -> Log.i(tag, txt) }
-                LogLevel.WARNING -> { tag, txt -> Log.w(tag, txt) }
-                LogLevel.ERROR -> { tag, txt -> Log.e(tag, txt) }
-                LogLevel.FAILURE -> { tag, txt -> Log.wtf(tag, txt) }
+                LogLevel.DEBUG -> { tag, txt -> ALog.d(tag, txt) }
+                LogLevel.TRACE -> { tag, txt -> ALog.v(tag, txt) }
+                LogLevel.INFO -> { tag, txt -> ALog.i(tag, txt) }
+                LogLevel.WARNING -> { tag, txt -> ALog.w(tag, txt) }
+                LogLevel.ERROR -> { tag, txt -> ALog.e(tag, txt) }
+                LogLevel.FATAL -> { tag, txt -> ALog.wtf(tag, txt) }
             }
-            val src = data.toMap()["source"]?.toString() ?: "Unknown"
-            printer(src, msg)
-            if (options.verbose && data.isNotEmpty()) {
-                printer(src, "= = = = = = = = = = = = D = A = T = A = = = = = = = = = = = =")
-                data.forEach { printer(src, it.first + ": " + it.second) }
-                printer(src, "= ".repeat(31))
-            }
+            printer(log.source, options.formatter.format(log))
         }
     }
-
-    override fun append(vararg o: Any?) = o.forEach { Log.i("anonymous", it.toString()) }
 }

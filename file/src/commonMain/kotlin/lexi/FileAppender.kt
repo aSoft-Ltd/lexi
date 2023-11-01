@@ -3,8 +3,9 @@ package lexi
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import lexi.internal.AbstractAppender
 
-class FileAppender(private val options: FileAppenderOptions) : Appender {
+class FileAppender(private val options: FileAppenderOptions) : AbstractAppender(), Appender {
     private val system = options.system
 
     init {
@@ -26,11 +27,9 @@ class FileAppender(private val options: FileAppenderOptions) : Appender {
 
     private fun LocalDateTime.toDirFormat() = "$year/${monthNumber.to2digits()}/${dayOfMonth.to2digits()}"
 
-    override fun append(level: LogLevel, msg: String, vararg data: Pair<String, Any?>) {
-        if (level > options.level) system.write(file) {
-            writeUtf8(options.formatter.format(Log(level, msg, null, data.toMap())))
+    override fun append(log: Log) {
+        if (log.level > options.level) system.write(file) {
+            writeUtf8(options.formatter.format(log))
         }
     }
-
-    override fun append(vararg o: Any?) = o.forEach { append(LogLevel.DEBUG, msg = it.toString()) }
 }

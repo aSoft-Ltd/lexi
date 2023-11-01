@@ -2,6 +2,12 @@ package android.util
 
 class Log {
     companion object {
+
+        @JvmStatic
+        fun v(tag: String, msg: String): Int {
+            println("DEBUG: $tag: $msg")
+            return 0
+        }
         @JvmStatic
         fun d(tag: String, msg: String): Int {
             println("DEBUG: $tag: $msg")

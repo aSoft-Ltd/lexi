@@ -1,32 +1,25 @@
 package lexi
 
 interface Appender {
-    fun append(level: LogLevel, msg: String, vararg data: Pair<String, Any?>)
-    fun append(vararg o: Any?)
+    fun append(log: Log)
 
-    fun log(vararg o: Any?) = obj(*o)
+    fun trace(msg: String, vararg data: Pair<String, Any?>): LogTracer
 
-    fun log(msg: String, vararg data: Pair<String, Any?>) = append(level = LogLevel.DEBUG, msg = msg, data = *data)
+    fun debug(msg: String, vararg data: Pair<String, Any?>)
 
-    fun debug(msg: String, vararg data: Pair<String, Any?>) = append(level = LogLevel.DEBUG, msg = msg, data = *data)
+    fun info(msg: String, vararg data: Pair<String, Any?>)
 
-    fun info(msg: String, vararg data: Pair<String, Any?>) = append(level = LogLevel.INFO, msg = msg, data = *data)
+    fun warn(msg: String, vararg data: Pair<String, Any?>)
 
-    fun warn(msg: String, vararg data: Pair<String, Any?>) = append(level = LogLevel.WARNING, msg = msg, data = *data)
+    fun error(msg: String, c: Throwable?, vararg data: Pair<String, Any?>)
 
-    fun error(msg: String, c: Throwable?, vararg data: Pair<String, Any?>) = append(level = LogLevel.ERROR, msg = msg, data = *data)
+    fun error(msg: String, vararg data: Pair<String, Any?>)
 
-    fun error(msg: String, c: Throwable?) = error(msg = msg, c, "reason" to (c?.message ?: "unknown"))
+    fun error(c: Throwable?)
 
-    fun error(msg: String, vararg data: Pair<String, Any?>) = append(level = LogLevel.ERROR, msg = msg, data = *data)
+    fun fatal(msg: String, c: Throwable?, vararg data: Pair<String, Any?>)
 
-    fun error(c: Throwable?) = error(c?.message ?: "Unknown Error", c, "reason" to (c?.message ?: "unknown"))
+    fun fatal(msg: String, vararg data: Pair<String, Any?>)
 
-    fun failure(msg: String, c: Throwable?, vararg data: Pair<String, Any?>) = append(level = LogLevel.FAILURE, msg = msg, data = *data)
-
-    fun failure(msg: String, vararg data: Pair<String, Any?>) = append(level = LogLevel.FAILURE, msg = msg, data = *data)
-
-    fun failure(c: Throwable?) = failure(c?.message ?: "Unknown Error", c)
-
-    fun obj(vararg obj: Any?) = append(*obj)
+    fun fatal(c: Throwable?)
 }

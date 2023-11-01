@@ -9,7 +9,8 @@ class LogFormatterTest {
         level = LogLevel.DEBUG,
         message = "Testing json log formatter",
         status = LogStatus.Progressing,
-        metadata = mapOf("source" to "Nameless")
+        source = "Unset",
+        metadata = mapOf()
     )
 
     @Test

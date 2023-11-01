@@ -1,7 +1,7 @@
 package lexi
 
 enum class LogLevel {
-    DEBUG, INFO, WARNING, ERROR, FAILURE;
+    DEBUG, TRACE, INFO, WARNING, ERROR, FATAL;
 
     companion object {
         fun parse(value: String?): LogLevel? {

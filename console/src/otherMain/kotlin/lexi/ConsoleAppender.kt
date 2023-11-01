@@ -1,20 +1,13 @@
 package lexi
 
-actual class ConsoleAppender actual constructor(var options: ConsoleAppenderOptions) : Appender {
-    override fun append(level: LogLevel, msg: String, vararg data: Pair<String, Any?>) {
+import lexi.internal.AbstractAppender
+
+actual class ConsoleAppender actual constructor(var options: ConsoleAppenderOptions) : AbstractAppender(), Appender {
+
+    override fun append(log: Log) {
+        val level = log.level
         if (level >= options.level) {
-            if (options.verbose) {
-                println("\n" + "= ".repeat(31))
-                println("${level.name}: $msg")
-                for ((key, value) in data) {
-                    println("$key: $value")
-                }
-                println("= ".repeat(31))
-            } else {
-                println("${level.name}: $msg")
-            }
+            println(options.formatter.format(log))
         }
     }
-
-    override fun append(vararg o: Any?) = o.forEach { println(it) }
 }

@@ -37,7 +37,6 @@ class FileAppenderTest {
         expect(text).toBe("""
             = = = = = = = = = = = = = S T A R T = = = = = = = = = = = = =
             [INFO]: test
-            Source: Unknown
             = = = = = = = = = = = = = = E N D = = = = = = = = = = = = = =
             
         """.trimIndent())

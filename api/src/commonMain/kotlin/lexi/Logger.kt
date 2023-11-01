@@ -1,26 +1,26 @@
 package lexi
 
+import lexi.internal.AbstractAppender
 import kotlin.reflect.KProperty
 
-class Logger(vararg appenders: Appender) : Appender {
-    private val appenders = appenders.toList()
+class Logger(
+    val source: String,
+    private val appenders: List<Appender>,
+    private val metadata: Map<String, Any?> = mapOf()
+) : AbstractAppender(), Appender {
 
-    private val extra = mutableMapOf<String, Any?>()
-
-    fun with(vararg data: Pair<String, Any?>): Logger = Logger(*appenders.toTypedArray()).apply {
-        extra.putAll(this@Logger.extra)
-        extra.putAll(data.toMap())
-    }
+    fun with(vararg data: Pair<String, Any?>): Logger = Logger(
+        source, appenders, metadata + data.toMap()
+    )
 
     fun with(map: Map<String, Any?>): Logger = with(*map.toList().toTypedArray())
 
-    override fun append(level: LogLevel, msg: String, vararg data: Pair<String, Any?>) {
-        appenders.forEach { it.append(level, msg, *(extra.toList() + data.toList()).toTypedArray()) }
+    override fun append(log: Log) {
+        appenders.forEach { it.append(log.copy(source = source, metadata = metadata + log.metadata)) }
     }
 
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): Logger = with(
-        "source" to (thisRef?.let { it::class.simpleName } ?: "Unknown")
-    )
-
-    override fun append(vararg o: Any?) = appenders.forEach { it.append(o) }
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): Logger {
+        if (thisRef == null) return Logger("Unknown", appenders, metadata)
+        return Logger(thisRef::class.simpleName ?: "Unknown", appenders, metadata)
+    }
 }
