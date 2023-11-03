@@ -21,7 +21,7 @@ class ConfigurationToOptionsTest {
             level = "info"
             verbose = true
             
-            [[logging.appenders]]
+            [[logging.appender]]
             type = "console"
         """.trimIndent()
         val options = Toml.decodeFromString(TestConfiguration.serializer(), raw).logging?.toOptions(

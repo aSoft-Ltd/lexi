@@ -1,6 +1,7 @@
 package lexi
 
 import kotlinx.datetime.Clock
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import lexi.appender.AppenderConfiguration
 import lexi.appender.ConsoleAppenderConfiguration
@@ -17,6 +18,7 @@ class LoggingConfiguration(
     val source: Boolean? = null,
     val status: Boolean? = null,
     val verbose: Boolean? = null,
+    @SerialName("appender")
     val appenders: List<AppenderConfiguration> = emptyList()
 ) {
     fun toOptions(

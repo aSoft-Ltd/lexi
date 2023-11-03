@@ -39,7 +39,7 @@ class ConfigurationParserTest {
         val raw = """
             [logging]
             
-            [[logging.appenders]]
+            [[logging.appender]]
             type = "console"
             level = "debug"
             format.verbose = false
@@ -61,7 +61,7 @@ class ConfigurationParserTest {
             
             [logging]
             
-            [[logging.appenders]]
+            [[logging.appender]]
             type = "consolidation"
             verbose = false
             level = "DEBUG"
@@ -74,7 +74,7 @@ class ConfigurationParserTest {
         val raw = """
             [logging]
             
-            [[logging.appenders]]
+            [[logging.appender]]
             type = "file"
             directory = "/logs"
             level = "debug"
@@ -96,13 +96,13 @@ class ConfigurationParserTest {
         val raw = """
             [logging]
             
-            [[logging.appenders]]
+            [[logging.appender]]
             type = "console"
             level = "debug"
             format.type = "json"
             format.verbose = false
             
-            [[logging.appenders]]
+            [[logging.appender]]
             type = "file"
             level = "debug"
             directory = "/logs"
