@@ -12,7 +12,7 @@ actual class ConsoleAppender actual constructor(
         if (level >= options.level) {
             val printer: (Any?) -> Unit = when (level) {
                 LogLevel.DEBUG -> console::debug
-                LogLevel.TRACE -> console::trace
+                LogLevel.TRACE -> console::debug
                 LogLevel.INFO -> console::info
                 LogLevel.WARNING -> console::warn
                 LogLevel.ERROR -> console::error
