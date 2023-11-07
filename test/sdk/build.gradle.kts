@@ -1,11 +1,11 @@
-import dev.petuska.npm.publish.task.NpmPublishTask
-import types.PurifyTypesTask
+//import types.PurifyTypesTask
 import java.net.URI
+import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrLink
+import types.purifyTypescriptDefinitions
 
 plugins {
     kotlin("multiplatform")
     id("tz.co.asoft.library")
-    id("dev.petuska.npm.publish")
 }
 
 apply<types.PostProcessTypescriptTypesPlugin>()
@@ -39,51 +39,21 @@ kotlin {
     }
 }
 
-npmPublish {
-    organization.set("picortex")
-    registries {
-        register("github") {
-            uri.set("https://npm.pkg.github.com/")
-            authToken.set(providers.environmentVariable("GH_TOKEN"))
-        }
+val compileSync = tasks.withType<KotlinJsIrLink>().matching {
+    it.name.contains("prod", ignoreCase = true)
+}.first()
 
-        register("andylamax") {
-            uri.set("http://localhost:1040")
-            authToken.set("andylamax")
-        }
-    }
-
-    packages {
-        val js by getting {
-            version.set("${project.version}")
-            packageName.set("picapital-react")
-            readme.set(file("README.md"))
-            packageJson {
-                types.set("index.d.ts")
-
-                repository {
-                    type.set("git")
-                    url.set("https://github.com/picortex/picapital.git")
-                }
-
-                devDependencies {
-                    set("@types/react", kotlinw.versions.react.types.get())
-                }
-            }
-        }
-    }
+purifyTypescriptDefinitions {
+    directory = compileSync.destinationDirectory
+    dependsOn(compileSync)
 }
 
-afterEvaluate {
-    val assembleJsPackage by tasks.getting{}
-    val purifyTypes by tasks.getting(PurifyTypesTask::class) {
-        inputFile.set(layout.buildDirectory.file("packages/js/picapital-react.d.ts"))
-        import("FC", "PropsWithChildren", "ReactNode") from "react"
-        imports.add("interface Props { }")
-        dependsOn(assembleJsPackage)
-    }
-
-    tasks.withType(NpmPublishTask::class.java).configureEach {
-        dependsOn(purifyTypes)
-    }
-}
+//afterEvaluate {
+//    val assembleJsPackage by tasks.getting{}
+//    val purifyTypes by tasks.getting(PurifyTypesTask::class) {
+//        inputFile.set(layout.buildDirectory.file("packages/js/picapital-react.d.ts"))
+//        import("FC", "PropsWithChildren", "ReactNode") from "react"
+//        imports.add("interface Props { }")
+//        dependsOn(assembleJsPackage)
+//    }
+//}
