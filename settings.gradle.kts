@@ -18,4 +18,4 @@ listOf("kommander").forEach { includeBuild("../$it") }
 rootProject.name = "lexi"
 
 includeSubs("lexi", ".", "api", "console", "file", "config")
-includeSubs("lexi-test", "test", "android","sdk")
+includeSubs("lexi-test", "test", "android")
