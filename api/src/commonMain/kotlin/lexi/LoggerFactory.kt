@@ -13,9 +13,13 @@ class LoggerFactory(private val name: String = "Unknown") {
         if (appender != null) appenders.add(appender)
     }
 
+    @Deprecated(
+        message = "use get instead. A Factory should have a get method not a build method. Those are for builders",
+        replaceWith = ReplaceWith("get(source)")
+    )
     fun build(source: String = name) = Logger(source, appenders)
 
-    fun get(source: String = "Unknown") = build().with("Source" to source)
+    fun get(source: String = "Unknown") = Logger(source, appenders)
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): Logger = if (thisRef != null) {
         get(thisRef::class.simpleName ?: "Unknown")
