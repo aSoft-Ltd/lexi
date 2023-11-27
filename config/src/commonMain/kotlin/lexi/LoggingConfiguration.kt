@@ -11,6 +11,7 @@ import lexi.formatter.SimpleLogFormatterConfiguration
 import lexi.formatter.toFormatter
 import okio.FileSystem
 import okio.Path
+import okio.Path.Companion.toPath
 
 @Serializable
 class LoggingConfiguration(
@@ -21,6 +22,7 @@ class LoggingConfiguration(
     @SerialName("appender")
     val appenders: List<AppenderConfiguration> = emptyList()
 ) {
+    @Deprecated("In favour of other directories")
     fun toOptions(
         system: FileSystem,
         clock: Clock,
@@ -52,6 +54,37 @@ class LoggingConfiguration(
         }
     }
 
+    fun toOptions(
+        system: FileSystem,
+        clock: Clock
+    ) = appenders.map {
+        val l = LogLevel.parse(it.level ?: level) ?: LogLevel.DEBUG
+
+        when (it) {
+            is ConsoleAppenderConfiguration -> ConsoleAppenderOptions(
+                level = l,
+                formatter = when (val formatter = it.format) {
+                    is SimpleLogFormatterConfiguration -> formatter.toFormatter(verbose, source, status)
+                    is JsonFormatterConfiguration -> formatter.toFormatter(verbose, source, status)
+                    null -> SimpleLogFormatter()
+                }
+            )
+
+            is FileAppenderConfiguration -> FileAppenderOptions(
+                system = system,
+                directory = it.directory.toPath(),
+                clock = clock,
+                level = l,
+                formatter = when (val formatter = it.format) {
+                    is SimpleLogFormatterConfiguration -> formatter.toFormatter(verbose, source, status)
+                    is JsonFormatterConfiguration -> formatter.toFormatter(verbose, source, status)
+                    null -> SimpleLogFormatter(SimpleLogFormatterOptions())
+                }
+            )
+        }
+    }
+
+    @Deprecated("In favour of toFactory")
     fun toLogger(
         system: FileSystem,
         clock: Clock,
@@ -66,5 +99,18 @@ class LoggingConfiguration(
         }
         return LoggerFactory("Default Factory").apply { addAll(appenders) }
     }
-}
 
+    fun toFactory(
+        system: FileSystem,
+        clock: Clock
+    ): LoggerFactory {
+        val appenders = toOptions(system, clock).map {
+            when (it) {
+                is ConsoleAppenderOptions -> ConsoleAppender(it)
+                is FileAppenderOptions -> FileAppender(it)
+                else -> throw IllegalArgumentException("Unknown AppenderConfiguration ${it::class.simpleName}")
+            }
+        }
+        return LoggerFactory("Default Factory").apply { addAll(appenders) }
+    }
+}
