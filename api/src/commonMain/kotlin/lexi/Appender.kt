@@ -3,7 +3,8 @@
 
 package lexi
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
+import kotlinx.JsExportIgnore
 
 interface Appender {
     fun append(log: Log)
@@ -16,18 +17,18 @@ interface Appender {
 
     fun warn(msg: String, vararg data: Pair<String, Any?>)
 
-    @JsExport.Ignore
+    @JsExportIgnore
     fun error(msg: String, c: Throwable?, vararg data: Pair<String, Any?>)
 
-    @JsExport.Ignore
+    @JsExportIgnore
     fun error(msg: String, vararg data: Pair<String, Any?>)
 
     fun error(c: Throwable?)
 
-    @JsExport.Ignore
+    @JsExportIgnore
     fun fatal(msg: String, c: Throwable?, vararg data: Pair<String, Any?>)
 
-    @JsExport.Ignore
+    @JsExportIgnore
     fun fatal(msg: String, vararg data: Pair<String, Any?>)
 
     fun fatal(c: Throwable?)
