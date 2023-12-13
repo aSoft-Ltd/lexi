@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
+import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmInstallTask
 import java.lang.System
 
 plugins {
@@ -19,7 +21,8 @@ kotlin {
     if (Targeting.ANDROID) android { library() }
     if (Targeting.JVM) jvm { library() }
     if (Targeting.JS) js(IR) { library() }
-    if (Targeting.WASM) wasm { library() }
+    if (Targeting.WASM) wasmJs { library() }
+    if (Targeting.WASM) wasmWasi { library() }
     val osxTargets = if (Targeting.OSX) osxTargets() else listOf()
     val ndkTargets = if (Targeting.NDK) ndkTargets() else listOf()
     val linuxTargets = if (Targeting.LINUX) linuxTargets() else listOf()
@@ -52,19 +55,15 @@ kotlin {
             dependsOn(commonMain)
         }
 
-//        val otherTest by creating {
-//            dependsOn(otherMain)
-//            dependsOn(commonTest)
-//        }
 
         if (Targeting.WASM) {
             val wasmJsMain by getting {
                 dependsOn(otherMain)
             }
 
-//            val wasmTest by getting {
-//                dependsOn(otherTest)
-//            }
+            val wasmWasiMain by getting {
+                dependsOn(otherMain)
+            }
         }
 
         for (target in nativeTargets) {
@@ -73,13 +72,20 @@ kotlin {
                     dependsOn(otherMain)
                 }
             }
-
-            val test by target.compilations.getting {
-                defaultSourceSet {
-//                    dependsOn(main.defaultSourceSet)
-//                    dependsOn(otherTest)
-                }
-            }
         }
     }
+}
+
+rootProject.the<NodeJsRootExtension>().apply {
+    nodeVersion = npm.versions.node.version.get()
+    nodeDownloadBaseUrl = npm.versions.node.url.get()
+}
+
+rootProject.tasks.withType<KotlinNpmInstallTask>().configureEach {
+    args.add("--ignore-engines")
+}
+
+tasks.named("wasmJsTestTestDevelopmentExecutableCompileSync").configure {
+    mustRunAfter(tasks.named("jsBrowserTest"))
+    mustRunAfter(tasks.named("jsNodeTest"))
 }

@@ -10,4 +10,4 @@ internal external interface Process {
     val versions: Any?
 }
 
-internal external val process: Process
+internal external val process: Process?

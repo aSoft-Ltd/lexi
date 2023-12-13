@@ -40,7 +40,7 @@ class ConfigurationToOptionsTest {
             level = "info"
             verbose = true
             
-            [[logging.appenders]]
+            [[logging.appender]]
             type = "file"
             directory = "/logs"
         """.trimIndent()
