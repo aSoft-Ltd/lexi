@@ -5,11 +5,10 @@ class JsonLogFormatter(private val options: JsonLogFormatterOptions = JsonLogFor
         put("level", log.level.name)
         put("message", log.message)
         if (options.source) {
-            put("source", log.source ?: "Unknown")
+            put("source", log.source)
         }
         if (options.verbose) {
             val map = log.metadata.toMutableMap()
-            map.remove("source")
             putAll(map)
         }
     }.entries.joinToString(prefix = "{${options.tab}\n", separator = ",\n", postfix = "\n}") { (key, value) ->
