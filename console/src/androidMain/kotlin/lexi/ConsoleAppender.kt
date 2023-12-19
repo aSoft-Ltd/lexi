@@ -5,7 +5,7 @@ import android.util.Log as ALog
 
 actual class ConsoleAppender actual constructor(var options: ConsoleAppenderOptions) : AbstractAppender(), Appender {
 
-    override fun append(log: Log) {
+    actual override fun append(log: Log) {
         val level = log.level
         if (level >= options.level) {
             val printer: (String, String) -> Unit = when (level) {

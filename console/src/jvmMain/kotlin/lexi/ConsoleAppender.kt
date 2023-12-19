@@ -3,7 +3,7 @@ package lexi
 import lexi.internal.AbstractAppender
 
 actual class ConsoleAppender actual constructor(var options: ConsoleAppenderOptions) : AbstractAppender(), Appender {
-    override fun append(log: Log) {
+    actual override fun append(log: Log) {
         val level = log.level
         if (level >= options.level) {
             val stream = if (level >= LogLevel.WARNING) System.err else System.out
