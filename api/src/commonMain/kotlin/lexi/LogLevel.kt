@@ -6,10 +6,9 @@ enum class LogLevel {
     companion object {
         fun parse(value: String?): LogLevel? {
             if (value == null) return null
-            val level = LogLevel.values().firstOrNull {
+            return LogLevel.entries.firstOrNull {
                 it.name == value.uppercase()
             } ?: throw IllegalArgumentException("Unknown logging level: $this")
-            return level
         }
     }
 }
