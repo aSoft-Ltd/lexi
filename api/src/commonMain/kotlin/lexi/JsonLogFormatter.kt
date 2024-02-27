@@ -7,6 +7,9 @@ class JsonLogFormatter(private val options: JsonLogFormatterOptions = JsonLogFor
         if (options.source) {
             put("source", log.source)
         }
+        if (log.status != null && options.status) {
+            put("status", log.status.name)
+        }
         if (options.verbose) {
             val map = log.metadata.toMutableMap()
             putAll(map)
