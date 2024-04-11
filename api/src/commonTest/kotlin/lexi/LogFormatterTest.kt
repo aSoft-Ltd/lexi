@@ -23,7 +23,8 @@ class LogFormatterTest {
             {  
               "level": "DEBUG",
               "message": "Testing json log formatter",
-              "source": "Nameless"
+              "source": "Nameless",
+              "status": "Progressing"
             }
         """.trimIndent())
     }
