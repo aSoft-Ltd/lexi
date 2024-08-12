@@ -18,7 +18,7 @@ configureAndroid("src/androidMain") {
 }
 
 kotlin {
-    if (Targeting.ANDROID) android { library() }
+    if (Targeting.ANDROID) androidTarget { library() }
     if (Targeting.JVM) jvm { library() }
     if (Targeting.JS) js(IR) { library() }
     if (Targeting.WASM) wasmJs { library() }
