@@ -1,12 +1,10 @@
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
-import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmInstallTask
-
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
     id("tz.co.asoft.library")
 }
 
-description = "a kotlin multiplatform logging solution"
+description = "A kotlin multiplatform solution to logging on the console"
 
 kotlin {
     if (Targeting.JVM) jvm { library() }
@@ -19,8 +17,12 @@ kotlin {
     if (Targeting.MINGW) mingwTargets()
 
     sourceSets {
-        commonMain.dependencies {
-            api(libs.kotlinx.exports)
+        val commonMain by getting {
+            dependencies {
+                api(projects.lexiApi)
+                api(projects.lexiFormatters)
+                api(kotlinx.serialization.core)
+            }
         }
     }
 }

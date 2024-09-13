@@ -6,11 +6,13 @@ class SimpleLogFormatter(private val options: SimpleLogFormatterOptions = Simple
             appendLine("${options.separator} ".repeat(13) + "S T A R T" + " ${options.separator}".repeat(13))
         }
         appendLine("""[${log.level.name}]: ${log.message}""")
-        if (log.status != null && options.status) {
-            appendLine("Status: ${log.status.name}")
+
+        val status = log.status
+        if (status != null && options.status) {
+            appendLine("status: ${status.name}")
         }
         if (options.source) {
-            appendLine("Source: ${log.source}")
+            appendLine("source: ${log.source}")
         }
         if (options.verbose) log.metadata.entries.forEach { (key, value) ->
             if (key != "source") appendLine("""$key: $value""")

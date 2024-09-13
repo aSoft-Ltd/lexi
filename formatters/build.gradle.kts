@@ -6,7 +6,7 @@ plugins {
     id("tz.co.asoft.library")
 }
 
-description = "a kotlin multiplatform logging solution"
+description = "a kotlin multiplatform logging format solution"
 
 kotlin {
     if (Targeting.JVM) jvm { library() }
@@ -20,7 +20,25 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(libs.kotlinx.exports)
+            api(projects.lexiApi)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kommander.core)
         }
     }
+}
+
+rootProject.the<NodeJsRootExtension>().apply {
+    nodeVersion = npm.versions.node.version.get()
+    nodeDownloadBaseUrl = npm.versions.node.url.get()
+}
+
+rootProject.tasks.withType<KotlinNpmInstallTask>().configureEach {
+    args.add("--ignore-engines")
+}
+
+tasks.named("wasmJsTestTestDevelopmentExecutableCompileSync").configure {
+    mustRunAfter(tasks.named("jsBrowserTest"))
+    mustRunAfter(tasks.named("jsNodeTest"))
 }

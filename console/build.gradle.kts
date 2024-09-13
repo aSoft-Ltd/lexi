@@ -5,6 +5,7 @@ import java.lang.System
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
     id("tz.co.asoft.library")
 }
 
@@ -34,12 +35,16 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.lexiApi)
+                api(projects.lexiFormatters)
             }
         }
 
+
         val commonTest by getting {
             dependencies {
+                implementation(projects.lexiConfiguration)
                 implementation(libs.kommander.core)
+//                implementation(kotlinx.serialization.toml) // We need wasm support
             }
         }
 
@@ -77,8 +82,8 @@ kotlin {
 }
 
 rootProject.the<NodeJsRootExtension>().apply {
-    nodeVersion = npm.versions.node.version.get()
-    nodeDownloadBaseUrl = npm.versions.node.url.get()
+    version = npm.versions.node.version.get()
+    downloadBaseUrl = npm.versions.node.url.get()
 }
 
 rootProject.tasks.withType<KotlinNpmInstallTask>().configureEach {

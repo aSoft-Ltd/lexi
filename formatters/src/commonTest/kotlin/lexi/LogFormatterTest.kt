@@ -36,8 +36,8 @@ class LogFormatterTest {
         expect(formatter.format(log)).toBe("""
             = = = = = = = = = = = = = S T A R T = = = = = = = = = = = = =
             [DEBUG]: Testing json log formatter
-            Status: Progressing
-            Source: Nameless
+            status: Progressing
+            source: Nameless
             = = = = = = = = = = = = = = E N D = = = = = = = = = = = = = =
             
         """.trimIndent())
