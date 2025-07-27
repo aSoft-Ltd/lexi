@@ -1,8 +1,11 @@
+@file:OptIn(ExperimentalTime::class)
+
 package lexi
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import okio.FileSystem
 import okio.Path
+import kotlin.time.ExperimentalTime
 
 class FileAppenderOptions(
     val system: FileSystem,

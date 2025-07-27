@@ -1,8 +1,11 @@
+@file:OptIn(ExperimentalTime::class)
+
 package lexi
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import okio.FileSystem
 import okio.Path.Companion.toPath
+import kotlin.time.ExperimentalTime
 
 fun Map<String, String>.toFileAppenderOptions(
     system: FileSystem,

@@ -1,6 +1,8 @@
+@file:OptIn(ExperimentalTime::class)
+
 package lexi
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import lexi.appender.AppenderConfiguration
@@ -12,6 +14,7 @@ import lexi.formatter.toFormatter
 import okio.FileSystem
 import okio.Path
 import okio.Path.Companion.toPath
+import kotlin.time.ExperimentalTime
 
 @Serializable
 class LoggingConfiguration(

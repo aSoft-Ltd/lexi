@@ -17,5 +17,5 @@ listOf("kommander", "kotlinx-interoperable").forEach { includeBuild("../$it") }
 
 rootProject.name = "lexi"
 
-includeSubs("lexi", ".", "api", "formatters", "console", "file", "config", "configuration")
+includeSubs("lexi", ".", "api", "formatters", "console", "file", "configuration" ) // , "config")
 includeSubs("lexi-test", "test", "android")

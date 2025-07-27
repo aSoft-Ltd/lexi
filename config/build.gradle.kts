@@ -9,28 +9,26 @@ description = "A kotlin multiplatform solution to logging on the console"
 kotlin {
     if (Targeting.JVM) jvm { library() }
     if (Targeting.JS) js(IR) { library() }
-//    if (Targeting.WASM) wasm { library() }
-    val osxTargets = if (Targeting.OSX) macOsTargets() else listOf()
-//    val ndkTargets = if (Targeting.NDK) ndkTargets() else listOf()
-    val linuxTargets = if (Targeting.LINUX) linuxTargets() else listOf()
-    val mingwTargets = if (Targeting.MINGW) mingwTargets() else listOf()
-
-    val nativeTargets = osxTargets + linuxTargets + mingwTargets
+    if (Targeting.WASM) wasmJs { library() }
+    if (Targeting.OSX) macOsTargets() else listOf()
+//    if (Targeting.NDK) ndkTargets() else listOf()
+    if (Targeting.LINUX) linuxTargets() else listOf()
+    if (Targeting.MINGW) mingwTargets() else listOf()
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api(projects.lexiConsole)
-                api(projects.lexiFile)
-                api(kotlinx.serialization.toml)
-            }
+        commonMain.dependencies {
+            api(projects.lexiConsole)
+            api(projects.lexiFile)
+            api(kotlinx.serialization.toml)
         }
 
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.kommander.core)
-                implementation(squareup.okio.fake)
-            }
+        commonTest.dependencies {
+            implementation(libs.kommander.core)
+            implementation(squareup.okio.fake)
+        }
+
+        if (Targeting.JVM) jvmTest.dependencies {
+            implementation(kotlin("test-junit5"))
         }
     }
 }

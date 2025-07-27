@@ -1,12 +1,15 @@
+@file:OptIn(ExperimentalTime::class)
+
 package lexi
 
 import kommander.expect
 import kotlin.test.Test
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.serialization.Serializable
 import net.peanuuutz.tomlkt.Toml
 import okio.Path.Companion.toPath
 import okio.fakefilesystem.FakeFileSystem
+import kotlin.time.ExperimentalTime
 
 class ConfigurationToOptionsTest {
     @Serializable
@@ -20,7 +23,7 @@ class ConfigurationToOptionsTest {
             [logging]
             level = "info"
             verbose = true
-            
+
             [[logging.appender]]
             type = "console"
         """.trimIndent()
@@ -39,7 +42,7 @@ class ConfigurationToOptionsTest {
             [logging]
             level = "info"
             verbose = true
-            
+
             [[logging.appender]]
             type = "file"
             directory = "/logs"

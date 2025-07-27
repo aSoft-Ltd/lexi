@@ -1,9 +1,12 @@
+@file:OptIn(ExperimentalTime::class)
+
 package lexi
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import lexi.internal.AbstractAppender
+import kotlin.time.ExperimentalTime
 
 class FileAppender(private val options: FileAppenderOptions) : AbstractAppender(), Appender {
     private val system = options.system

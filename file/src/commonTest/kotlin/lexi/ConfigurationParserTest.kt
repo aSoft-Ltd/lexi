@@ -1,10 +1,10 @@
-package lexi
-
-import kotlin.test.Test
-import kotlinx.datetime.Clock
-import kotlinx.serialization.Serializable
-import okio.FileSystem
-import okio.fakefilesystem.FakeFileSystem
+//package lexi
+//
+//import kotlin.test.Test
+//import kotlin.time.Clock
+//import kotlinx.serialization.Serializable
+//import okio.FileSystem
+//import okio.fakefilesystem.FakeFileSystem
 //import net.peanuuutz.tomlkt.Toml
 //
 //class ConfigurationParserTest {

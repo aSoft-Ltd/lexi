@@ -10,7 +10,7 @@ import net.peanuuutz.tomlkt.Toml
 
 class ConfigurationParserTest {
 
-    private val codec = Toml { 
+    private val codec = Toml {
         ignoreUnknownKeys = true
     }
     @Serializable
@@ -38,7 +38,7 @@ class ConfigurationParserTest {
     fun should_parse_configuration_with_a_console_appender() {
         val raw = """
             [logging]
-            
+
             [[logging.appender]]
             type = "console"
             level = "debug"
@@ -58,9 +58,9 @@ class ConfigurationParserTest {
         val raw = """
             [chess]
             board = "tululu"
-            
+
             [logging]
-            
+
             [[logging.appender]]
             type = "consolidation"
             verbose = false
@@ -73,7 +73,7 @@ class ConfigurationParserTest {
     fun should_parse_a_config_with_valid_file_values() {
         val raw = """
             [logging]
-            
+
             [[logging.appender]]
             type = "file"
             directory = "/logs"
@@ -95,13 +95,13 @@ class ConfigurationParserTest {
     fun should_parse_a_config_with_valid__console_and_file_values() {
         val raw = """
             [logging]
-            
+
             [[logging.appender]]
             type = "console"
             level = "debug"
             format.type = "json"
             format.verbose = false
-            
+
             [[logging.appender]]
             type = "file"
             level = "debug"

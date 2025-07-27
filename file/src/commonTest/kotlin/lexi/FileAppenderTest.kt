@@ -1,13 +1,16 @@
+@file:OptIn(ExperimentalTime::class)
+
 package lexi
 
 import kommander.expect
 import kotlin.test.Test
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 import okio.FileSystem
 import okio.Path
 import okio.Path.Companion.toPath
 import okio.fakefilesystem.FakeFileSystem
+import kotlin.time.ExperimentalTime
 
 class FileAppenderTest {
 
@@ -38,7 +41,7 @@ class FileAppenderTest {
             = = = = = = = = = = = = = S T A R T = = = = = = = = = = = = =
             [INFO]: test
             = = = = = = = = = = = = = = E N D = = = = = = = = = = = = = =
-            
+
         """.trimIndent())
     }
 

@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsEnvSpec
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmInstallTask
 
 plugins {
@@ -20,28 +20,28 @@ kotlin {
     val mingwTargets = if (Targeting.MINGW) mingwTargets() else listOf()
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api(projects.lexiApi)
-                api(projects.lexiFormatters)
-                api(squareup.okio.core)
-                api(kotlinx.datetime)
-            }
+        commonMain.dependencies {
+            api(projects.lexiApi)
+            api(projects.lexiFormatters)
+            api(squareup.okio.core)
+            api(kotlinx.datetime)
         }
 
 
-        val commonTest by getting {
-            dependencies {
-                implementation(projects.lexiConfiguration)
-                implementation(libs.kommander.core)
-                implementation(squareup.okio.fake)
+        commonTest.dependencies {
+            implementation(projects.lexiConfiguration)
+            implementation(libs.kommander.core)
+            implementation(squareup.okio.fake)
 //                implementation(kotlinx.serialization.toml) // we need wasm support
-            }
+        }
+
+        if (Targeting.JVM) jvmTest.dependencies {
+            implementation(kotlin("test-junit5"))
         }
     }
 }
 
-rootProject.the<NodeJsRootExtension>().apply {
+rootProject.the<NodeJsEnvSpec>().apply {
     version = npm.versions.node.version.get()
     downloadBaseUrl = npm.versions.node.url.get()
 }
