@@ -20,7 +20,7 @@ configureAndroid("src/androidMain") {
 kotlin {
     if (Targeting.ANDROID) androidTarget { library() }
     if (Targeting.JVM) jvm { library() }
-    if (Targeting.JS) js(IR) { library() } //
+    if (Targeting.JS) js { library() } //
     if (Targeting.WASM) wasmJs { library() }
     if (Targeting.WASM) wasmWasi { library() }
     val osxTargets = if (Targeting.OSX) osxTargets() else listOf()

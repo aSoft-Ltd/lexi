@@ -8,7 +8,7 @@ description = "A kotlin multiplatform solution to logging on the console"
 
 kotlin {
     if (Targeting.JVM) jvm { library() }
-    if (Targeting.JS) js(IR) { library() } //
+    if (Targeting.JS) js { library() } //
     if (Targeting.WASM) wasmJs { library() }
     if (Targeting.WASM) wasmWasi { library() }
     if (Targeting.OSX) osxTargets()
